@@ -112,14 +112,14 @@ public class MiGrafo extends Grafo{
         boolean res = false;
         if(existeArista(origen, destino)){
             if (esDirigido){
-                listaAdj.get(origen).remove(destino);
+                listaAdj.get(origen).remove(getAdyacentePorNodo(origen, destino));
                 nAristas--;
                 res = true;
             }
 
             if (!esDirigido){
-                listaAdj.get(origen).remove(destino);
-                listaAdj.get(destino).remove(origen);
+                listaAdj.get(origen).remove(getAdyacentePorNodo(origen, destino));
+                listaAdj.get(destino).remove(getAdyacentePorNodo(destino, origen));
                 nAristas--;
                 res = true;
             }
@@ -279,5 +279,18 @@ public class MiGrafo extends Grafo{
 
     private int getGradoVertice(int vertice) {
         return getAdyacentes(vertice).size();
+    }
+
+    private Adyacente getAdyacentePorNodo(int nodo, int nodoBuscar){
+        Adyacente res = null;
+        ArrayList<Adyacente> adyacentes = getAdyacentes(nodo);
+
+        for (Adyacente adyacente : adyacentes) {
+            if (adyacente.getNodo() == nodoBuscar){
+                res = adyacente;
+                break;
+            }
+        }
+    return res;
     }
 }
